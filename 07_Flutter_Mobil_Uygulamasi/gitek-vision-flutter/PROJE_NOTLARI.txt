@@ -1,0 +1,31 @@
+GITEK VISION FLUTTER UYGULAMASI
+
+1. Telefon ile Jetson/Ubuntu cihazı aynı Wi-Fi ağına bağlı olmalıdır.
+2. lib/config/api_config.dart dosyasındaki baseUrl değerini sunucunun IPv4
+   adresine göre düzenleyin. http://JETSON_IP_ADRESI:8000
+3. Proje klasöründe çalıştırın:
+   flutter clean
+   flutter pub get
+   flutter run -d TELEFON_CIHAZ_KODU
+
+Uygulama adı: Gitek Vision
+Uygulama ikonu: android/app/src/main/res/mipmap-*/ic_launcher.png
+Açılış görseli: android/app/src/main/res/drawable-nodpi/splash_logo.png
+Orijinal logo: assets/images/gitek_logo.png
+
+Geçmiş ekranında bir analize dokunulduğunda /analizler/{id} endpoint'i çağrılır.
+Bu nedenle uygulama ve bu paketle birlikte verilen güncel backend aynı anda
+kullanılmalıdır.
+
+Tema: Ana ekranın sağ üstünde açık/koyu/sistem teması arasında geçiş yapan
+bir düğme eklendi (lib/theme/app_theme.dart). Marka renkleri ve bileşen
+temaları (kart, buton, snackbar vb.) bu dosyada tek yerden yönetiliyor.
+
+Model: Backend yalnızca model/best.pt dosyasını kullanır. Model sınıfları
+somun, vida ve somun_deligi olmalıdır.
+
+Alan: Somun alanı backend'de somun dış maskesinden somun_deligi maskesi
+çıkarılarak hesaplanır. Flutter gelen net alanı doğrudan gösterir.
+
+Süre: Uygulamada GET/POST süreleri gösterilmez. "Analiz süresi" yalnızca
+Jetson üzerindeki YOLO model.predict çağrısının süresidir.

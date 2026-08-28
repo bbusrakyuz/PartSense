@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gitek Vision</title>
+
+    <style>
+        :root {
+            --arka-plan: #f3f6fb;
+            --kart: #ffffff;
+            --ana-renk: #2563eb;
+            --ana-koyu: #1d4ed8;
+            --metin: #172033;
+            --ikincil-metin: #64748b;
+            --kenarlik: #e2e8f0;
+            --basarili: #16a34a;
+            --hata: #dc2626;
+            --vida: #2563eb;
+            --somun: #7c3aed;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            color: var(--metin);
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #dbeafe 0,
+                    transparent 32%
+                ),
+                var(--arka-plan);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        .ust-alan {
+            padding: 42px 20px 68px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e3a8a 58%,
+                    #2563eb
+                );
+        }
+
+        .ust-icerik {
+            width: min(1100px, 100%);
+            margin: auto;
+        }
+
+        .rozet {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 17px;
+            padding: 7px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            font-size: 13px;
+        }
+
+        .rozet-nokta {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 12px #4ade80;
+        }
+
+        .ust-alan h1 {
+            max-width: 700px;
+            margin: 0 0 12px;
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.1;
+        }
+
+        .ust-alan p {
+            max-width: 680px;
+            margin: 0;
+            color: #dbeafe;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .sayfa {
+            width: min(1100px, calc(100% - 32px));
+            margin: -38px auto 50px;
+        }
+
+        .panel {
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 22px;
+            background: var(--kart);
+            box-shadow:
+                0 18px 50px rgba(30, 41, 59, 0.10);
+        }
+
+        .yukleme-paneli {
+            padding: 25px;
+        }
+
+        .yukleme-baslik {
+            margin: 0 0 18px;
+        }
+
+        .yukleme-baslik h2 {
+            margin: 0 0 6px;
+            font-size: 22px;
+        }
+
+        .yukleme-baslik p {
+            margin: 0;
+            color: var(--ikincil-metin);
+        }
+
+        .dosya-alani {
+            display: flex;
+            min-height: 190px;
+            padding: 25px;
+            border: 2px dashed #bfcee2;
+            border-radius: 17px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .dosya-alani:hover,
+        .dosya-alani.surukleniyor {
+            border-color: var(--ana-renk);
+            background: #eff6ff;
+        }
+
+        .dosya-ikonu {
+            display: grid;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 14px;
+            place-items: center;
+            border-radius: 17px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #60a5fa
+                );
+            font-size: 28px;
+        }
+
+        .dosya-alani strong {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 17px;
+        }
+
+        .dosya-alani span {
+            color: var(--ikincil-metin);
+            font-size: 14px;
+        }
+
+        #dosyaInput {
+            display: none;
+        }
+
+        .secim-alani {
+            display: none;
+            grid-template-columns: 130px 1fr auto;
+            gap: 18px;
+            margin-top: 18px;
+            padding: 15px;
+            border: 1px solid var(--kenarlik);
+            border-radius: 16px;
+            align-items: center;
+        }
+
+        .secim-onizleme {
+            width: 130px;
+            height: 95px;
+            border-radius: 12px;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+
+        .dosya-bilgisi {
+            min-width: 0;
+        }
+
+        .dosya-bilgisi strong {
+            display: block;
+            overflow: hidden;
+            margin-bottom: 7px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dosya-bilgisi span {
+            color: var(--ikincil-metin);
+            font-size: 14px;
+        }
+
+        .analiz-butonu {
+            min-width: 145px;
+            padding: 13px 22px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--ana-renk),
+                    var(--ana-koyu)
+                );
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .analiz-butonu:hover {
+            transform: translateY(-1px);
+        }
+
+        .analiz-butonu:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .durum {
+            display: none;
+            margin-top: 16px;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .durum.bilgi {
+            display: block;
+            color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .durum.basarili {
+            display: block;
+            color: #15803d;
+            background: #f0fdf4;
+        }
+
+        .durum.hata {
+            display: block;
+            color: #b91c1c;
+            background: #fef2f2;
+        }
+
+        .sonuc-bolumu {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .sonuc-ust {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sonuc-ust h2 {
+            margin: 0 0 5px;
+        }
+
+        .sonuc-ust p {
+            margin: 0;
+            color: var(--ikincil-metin);
+        }
+
+        .analiz-rozet {
+            padding: 9px 14px;
+            border-radius: 999px;
+            color: #1d4ed8;
+            background: #dbeafe;
+            font-weight: 700;
+        }
+
+        .ozet-kartlari {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(160px, 1fr));
+            gap: 13px;
+            margin-bottom: 20px;
+        }
+
+        .ozet-kart {
+            padding: 17px;
+            border: 1px solid var(--kenarlik);
+            border-radius: 16px;
+            background: white;
+        }
+
+        .ozet-kart span {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--ikincil-metin);
+            font-size: 13px;
+        }
+
+        .ozet-kart strong {
+            font-size: 22px;
+        }
+
+        .sonuc-gorsel-paneli {
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .panel-baslik {
+            display: flex;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--kenarlik);
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-baslik h3 {
+            margin: 0;
+        }
+
+        .panel-baslik span {
+            color: var(--ikincil-metin);
+            font-size: 13px;
+        }
+
+        .sonuc-gorsel-kapsayici {
+            display: grid;
+            min-height: 320px;
+            padding: 18px;
+            place-items: center;
+            background: #0f172a;
+        }
+
+        .sonuc-gorseli {
+            display: block;
+            max-width: 100%;
+            max-height: 650px;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        .nesne-grubu {
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .grup-baslik {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .grup-baslik h3 {
+            margin: 0;
+        }
+
+        .adet-rozeti {
+            display: inline-grid;
+            min-width: 30px;
+            height: 30px;
+            padding: 0 9px;
+            place-items: center;
+            border-radius: 999px;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .vida-rozeti {
+            background: var(--vida);
+        }
+
+        .somun-rozeti {
+            background: var(--somun);
+        }
+
+        .nesne-listesi {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .nesne-karti {
+            position: relative;
+            overflow: hidden;
+            padding: 18px;
+            border: 1px solid var(--kenarlik);
+            border-radius: 16px;
+            background: #f8fafc;
+        }
+
+        .nesne-karti::before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 5px;
+            content: "";
+        }
+
+        .nesne-karti.vida::before {
+            background: var(--vida);
+        }
+
+        .nesne-karti.somun::before {
+            background: var(--somun);
+        }
+
+        .nesne-karti-ust {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nesne-adi {
+            font-weight: 800;
+        }
+
+        .nesne-id {
+            padding: 5px 9px;
+            border-radius: 8px;
+            color: var(--ikincil-metin);
+            background: #e2e8f0;
+            font-size: 12px;
+        }
+
+        .alan-degeri {
+            margin-bottom: 15px;
+        }
+
+        .alan-degeri span {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--ikincil-metin);
+            font-size: 13px;
+        }
+
+        .alan-degeri strong {
+            font-size: 24px;
+        }
+
+        .alt-detaylar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin-bottom: 14px;
+        }
+
+        .alt-detay {
+            padding: 9px;
+            border-radius: 9px;
+            background: white;
+        }
+
+        .alt-detay span {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--ikincil-metin);
+            font-size: 11px;
+        }
+
+        .alt-detay strong {
+            font-size: 13px;
+        }
+
+        .guven-satiri {
+            display: flex;
+            margin-bottom: 7px;
+            color: var(--ikincil-metin);
+            font-size: 13px;
+            justify-content: space-between;
+        }
+
+        .guven-cubugu {
+            overflow: hidden;
+            height: 7px;
+            border-radius: 999px;
+            background: #e2e8f0;
+        }
+
+        .guven-dolgu {
+            height: 100%;
+            border-radius: inherit;
+        }
+
+        .vida .guven-dolgu {
+            background: var(--vida);
+        }
+
+        .somun .guven-dolgu {
+            background: var(--somun);
+        }
+
+        .bos-mesaj {
+            grid-column: 1 / -1;
+            padding: 25px;
+            border: 1px dashed var(--kenarlik);
+            border-radius: 14px;
+            color: var(--ikincil-metin);
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .ust-alan {
+                padding-top: 30px;
+            }
+
+            .secim-alani {
+                grid-template-columns: 85px 1fr;
+            }
+
+            .secim-onizleme {
+                width: 85px;
+                height: 75px;
+            }
+
+            .analiz-butonu {
+                grid-column: 1 / -1;
+                width: 100%;
+            }
+
+            .sonuc-ust {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nesne-listesi {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="ust-alan">
+    <div class="ust-icerik">
+        <div class="rozet">
+            <span class="rozet-nokta"></span>
+            Jetson AI sunucusu
+        </div>
+
+        <h1>Gitek Vision</h1>
+
+        <p>
+            Görseli yükleyin; segmentasyon, alan hesabı ve
+            güven değerleri Jetson üzerinde hesaplansın.
+        </p>
+    </div>
+</header>
+
+<main class="sayfa">
+
+    <section class="panel yukleme-paneli">
+        <div class="yukleme-baslik">
+            <h2>Yeni analiz</h2>
+
+            <p>
+                JPG, JPEG veya PNG formatında bir görsel seçin.
+            </p>
+        </div>
+
+        <label id="dosyaAlani" class="dosya-alani">
+            <input
+                id="dosyaInput"
+                type="file"
+                accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+            >
+
+            <div>
+                <div class="dosya-ikonu">↑</div>
+                <strong>Görsel seçmek için tıklayın</strong>
+                <span>veya dosyayı bu alana sürükleyin</span>
+            </div>
+        </label>
+
+        <div id="secimAlani" class="secim-alani">
+            <img
+                id="secimOnizleme"
+                class="secim-onizleme"
+                alt="Seçilen görsel"
+            >
+
+            <div class="dosya-bilgisi">
+                <strong id="dosyaAdi"></strong>
+                <span id="dosyaBoyutu"></span>
+            </div>
+
+            <button
+                id="analizButonu"
+                class="analiz-butonu"
+                type="button"
+            >
+                Analiz Et
+            </button>
+        </div>
+
+        <div id="durum" class="durum"></div>
+    </section>
+
+    <section id="sonucBolumu" class="sonuc-bolumu">
+
+        <div class="sonuc-ust">
+            <div>
+                <h2>Analiz sonucu</h2>
+                <p>Bulunan nesneler ayrı ayrı listelenmiştir.</p>
+            </div>
+
+            <div id="analizRozeti" class="analiz-rozet">
+                Analiz #0
+            </div>
+        </div>
+
+        <div class="ozet-kartlari">
+            <div class="ozet-kart">
+                <span>Vida sayısı</span>
+                <strong id="vidaSayisi">0</strong>
+            </div>
+
+            <div class="ozet-kart">
+                <span>Somun sayısı</span>
+                <strong id="somunSayisi">0</strong>
+            </div>
+
+            <div class="ozet-kart">
+                <span>Toplam nesne</span>
+                <strong id="toplamNesne">0</strong>
+            </div>
+
+            <div class="ozet-kart">
+                <span>İşlem süresi</span>
+                <strong id="islemSuresi">0 ms</strong>
+            </div>
+        </div>
+
+        <section class="panel sonuc-gorsel-paneli">
+            <div class="panel-baslik">
+                <h3>Segmentasyon görüntüsü</h3>
+                <span>YOLO sonucu</span>
+            </div>
+
+            <div class="sonuc-gorsel-kapsayici">
+                <img
+                    id="sonucGorseli"
+                    class="sonuc-gorseli"
+                    alt="YOLO segmentasyon sonucu"
+                >
+            </div>
+        </section>
+
+        <section class="panel nesne-grubu">
+            <div class="grup-baslik">
+                <h3>Vidalar</h3>
+
+                <span
+                    id="vidaAdetRozeti"
+                    class="adet-rozeti vida-rozeti"
+                >
+                    0
+                </span>
+            </div>
+
+            <div
+                id="vidaListesi"
+                class="nesne-listesi"
+            ></div>
+        </section>
+
+        <section class="panel nesne-grubu">
+            <div class="grup-baslik">
+                <h3>Somunlar</h3>
+
+                <span
+                    id="somunAdetRozeti"
+                    class="adet-rozeti somun-rozeti"
+                >
+                    0
+                </span>
+            </div>
+
+            <div
+                id="somunListesi"
+                class="nesne-listesi"
+            ></div>
+        </section>
+
+    </section>
+
+</main>
+
+<script>
+    const dosyaInput =
+        document.getElementById("dosyaInput");
+
+    const dosyaAlani =
+        document.getElementById("dosyaAlani");
+
+    const secimAlani =
+        document.getElementById("secimAlani");
+
+    const secimOnizleme =
+        document.getElementById("secimOnizleme");
+
+    const dosyaAdi =
+        document.getElementById("dosyaAdi");
+
+    const dosyaBoyutu =
+        document.getElementById("dosyaBoyutu");
+
+    const analizButonu =
+        document.getElementById("analizButonu");
+
+    const durum =
+        document.getElementById("durum");
+
+    const sonucBolumu =
+        document.getElementById("sonucBolumu");
+
+    let secilenDosya = null;
+    let onizlemeAdresi = null;
+
+
+    function dosyaBoyutunuYaz(bayt) {
+        if (bayt < 1024) {
+            return `${bayt} B`;
+        }
+
+        if (bayt < 1024 * 1024) {
+            return `${(bayt / 1024).toFixed(1)} KB`;
+        }
+
+        return `${(
+            bayt / (1024 * 1024)
+        ).toFixed(2)} MB`;
+    }
+
+
+    function alanYaz(alan) {
+        return Number(alan).toLocaleString(
+            "tr-TR"
+        ) + " px²";
+    }
+
+
+    function guvenYuzdesi(guven) {
+        const deger = Number(guven) || 0;
+
+        return Math.max(
+            0,
+            Math.min(100, Math.round(deger * 100))
+        );
+    }
+
+
+    function islemSuresiniYaz(milisaniye) {
+        const sure = Number(milisaniye) || 0;
+
+        if (sure >= 1000) {
+            return `${(sure / 1000).toFixed(2)} sn`;
+        }
+
+        return `${sure.toFixed(0)} ms`;
+    }
+
+
+    function durumGoster(mesaj, tur) {
+        durum.textContent = mesaj;
+        durum.className = `durum ${tur}`;
+    }
+
+
+    function dosyayiSec(dosya) {
+        if (!dosya) {
+            return;
+        }
+
+        secilenDosya = dosya;
+
+        if (onizlemeAdresi) {
+            URL.revokeObjectURL(onizlemeAdresi);
+        }
+
+        onizlemeAdresi = URL.createObjectURL(dosya);
+
+        secimOnizleme.src = onizlemeAdresi;
+        dosyaAdi.textContent = dosya.name;
+        dosyaBoyutu.textContent =
+            dosyaBoyutunuYaz(dosya.size);
+
+        secimAlani.style.display = "grid";
+        sonucBolumu.style.display = "none";
+        durum.className = "durum";
+    }
+
+
+    function vidaKartiOlustur(vida) {
+        const guven = guvenYuzdesi(
+            vida.guven
+        );
+
+        return `
+            <article class="nesne-karti vida">
+                <div class="nesne-karti-ust">
+                    <span class="nesne-adi">
+                        Vida ${vida.sira_no}
+                    </span>
+
+                    <span class="nesne-id">
+                        ID: ${vida.nesne_id}
+                    </span>
+                </div>
+
+                <div class="alan-degeri">
+                    <span>Alan</span>
+                    <strong>${alanYaz(vida.alan)}</strong>
+                </div>
+
+                <div class="guven-satiri">
+                    <span>Güven</span>
+                    <strong>%${guven}</strong>
+                </div>
+
+                <div class="guven-cubugu">
+                    <div
+                        class="guven-dolgu"
+                        style="width: ${guven}%"
+                    ></div>
+                </div>
+            </article>
+        `;
+    }
+
+
+    function somunKartiOlustur(somun) {
+    const guven = guvenYuzdesi(
+        somun.guven
+    );
+
+    return `
+        <article class="nesne-karti somun">
+            <div class="nesne-karti-ust">
+                <span class="nesne-adi">
+                    Somun ${somun.sira_no}
+                </span>
+
+                <span class="nesne-id">
+                    ID: ${somun.nesne_id}
+                </span>
+            </div>
+
+            <div class="alan-degeri">
+                <span>Somun alanı</span>
+                <strong>${alanYaz(somun.alan)}</strong>
+            </div>
+
+            <div class="guven-satiri">
+                <span>Güven</span>
+                <strong>%${guven}</strong>
+            </div>
+
+            <div class="guven-cubugu">
+                <div
+                    class="guven-dolgu"
+                    style="width: ${guven}%"
+                ></div>
+            </div>
+        </article>
+    `;
+}
+
+
+    function nesneleriGoster(veri) {
+        const vidalar = Array.isArray(veri.vidalar)
+            ? veri.vidalar
+            : [];
+
+        const somunlar = Array.isArray(veri.somunlar)
+            ? veri.somunlar
+            : [];
+
+        document.getElementById(
+            "vidaSayisi"
+        ).textContent = vidalar.length;
+
+        document.getElementById(
+            "somunSayisi"
+        ).textContent = somunlar.length;
+
+        document.getElementById(
+            "toplamNesne"
+        ).textContent = (
+            vidalar.length + somunlar.length
+        );
+
+        document.getElementById(
+            "islemSuresi"
+        ).textContent = islemSuresiniYaz(
+            veri.islem_suresi_ms
+        );
+
+        document.getElementById(
+            "vidaAdetRozeti"
+        ).textContent = vidalar.length;
+
+        document.getElementById(
+            "somunAdetRozeti"
+        ).textContent = somunlar.length;
+
+        document.getElementById(
+            "analizRozeti"
+        ).textContent = `Analiz #${veri.analiz_id}`;
+
+        const vidaListesi =
+            document.getElementById("vidaListesi");
+
+        const somunListesi =
+            document.getElementById("somunListesi");
+
+        if (vidalar.length > 0) {
+            vidaListesi.innerHTML = vidalar
+                .map(vidaKartiOlustur)
+                .join("");
+        } else {
+            vidaListesi.innerHTML = `
+                <div class="bos-mesaj">
+                    Bu görselde vida bulunamadı.
+                </div>
+            `;
+        }
+
+        if (somunlar.length > 0) {
+            somunListesi.innerHTML = somunlar
+                .map(somunKartiOlustur)
+                .join("");
+        } else {
+            somunListesi.innerHTML = `
+                <div class="bos-mesaj">
+                    Bu görselde somun bulunamadı.
+                </div>
+            `;
+        }
+
+        const sonucGorseli =
+            document.getElementById("sonucGorseli");
+
+        sonucGorseli.src =
+            `/sonuclar/${
+                encodeURIComponent(veri.sonuc_gorseli)
+            }?v=${Date.now()}`;
+
+        sonucBolumu.style.display = "block";
+    }
+
+
+    dosyaInput.addEventListener(
+        "change",
+        () => dosyayiSec(dosyaInput.files[0])
+    );
+
+
+    dosyaAlani.addEventListener(
+        "dragover",
+        (olay) => {
+            olay.preventDefault();
+
+            dosyaAlani.classList.add(
+                "surukleniyor"
+            );
+        }
+    );
+
+
+    dosyaAlani.addEventListener(
+        "dragleave",
+        () => {
+            dosyaAlani.classList.remove(
+                "surukleniyor"
+            );
+        }
+    );
+
+
+    dosyaAlani.addEventListener(
+        "drop",
+        (olay) => {
+            olay.preventDefault();
+
+            dosyaAlani.classList.remove(
+                "surukleniyor"
+            );
+
+            dosyayiSec(
+                olay.dataTransfer.files[0]
+            );
+        }
+    );
+
+
+    analizButonu.addEventListener(
+        "click",
+        async () => {
+            if (!secilenDosya) {
+                durumGoster(
+                    "Lütfen bir görsel seçin.",
+                    "hata"
+                );
+
+                return;
+            }
+
+            const form = new FormData();
+
+            form.append(
+                "dosya",
+                secilenDosya
+            );
+
+            analizButonu.disabled = true;
+            analizButonu.textContent =
+                "Analiz ediliyor...";
+
+            durumGoster(
+                "Görsel Jetson üzerinde işleniyor.",
+                "bilgi"
+            );
+
+            try {
+                const cevap = await fetch(
+                    "/tahmin",
+                    {
+                        method: "POST",
+                        body: form
+                    }
+                );
+
+                const veri = await cevap.json();
+
+                if (!cevap.ok) {
+                    throw new Error(
+                        veri.detail ||
+                        "Analiz tamamlanamadı."
+                    );
+                }
+
+                nesneleriGoster(veri);
+
+                durumGoster(
+                    `Analiz #${veri.analiz_id} tamamlandı.`,
+                    "basarili"
+                );
+
+                sonucBolumu.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            } catch (hata) {
+                durumGoster(
+                    hata.message,
+                    "hata"
+                );
+
+            } finally {
+                analizButonu.disabled = false;
+                analizButonu.textContent =
+                    "Analiz Et";
+            }
+        }
+    );
+</script>
+
+</body>
+</html>

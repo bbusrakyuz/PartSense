@@ -1,0 +1,4 @@
+OK - alan_hesapla.py
+OK - analiz.py
+OK - main.py
+OK - veritabani.py

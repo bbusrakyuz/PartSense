@@ -1,0 +1,9 @@
+path: C:/gan_projesi/yolo_stylegan_300_somundelik
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: somun
+  1: somun_deligi
+  2: vida

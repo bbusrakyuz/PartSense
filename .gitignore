@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+env/
+*.db-journal
+
+# FastAPI çalışma çıktıları
+uploads/*
+results/*
+logs/*
+!uploads/.gitkeep
+!results/.gitkeep
+!logs/.gitkeep
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.pub-cache/
+coverage/
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Eğitim geçici dosyaları
+runs/
+wandb/
+*.cache
+
+# Büyük teslim arşivleri
+PartSense_Tam_Proje_Paketi*.zip
+
+# Gizli Roboflow veri seti
+02_Roboflow_Verisi/*
+!02_Roboflow_Verisi/README.md
+
+# Eğitilmiş model dosyaları
+03_Jetson_Projesi/Kolay_Erisim/model/*.pt
