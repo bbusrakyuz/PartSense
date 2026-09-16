@@ -1,5 +1,30 @@
 # PartSense Tam Proje Paketi
 
+> **Collaborative project:** PartSense was developed during our internship work at Gitek Vision by **Emre Mahir Elbasan** and **Büşra Akyüz**. This repository is a fork of the shared project repository [`EmreMhir/PartSense`](https://github.com/EmreMhir/PartSense) to preserve the original project attribution and history.
+
+## My Contributions — Büşra Akyüz
+
+My work on PartSense focused primarily on the computer vision, data preparation, model experimentation, and synthetic-data research stages:
+
+- Conducted technical research on image processing, YOLO annotation formats, model metrics, and error analysis.
+- Extracted video frames with OpenCV, cleaned image data, and applied different dataset-preparation approaches.
+- Experimented with object detection and instance segmentation training pipelines and analyzed class-specific errors related to nut holes, touching objects, and challenging backgrounds.
+- Prepared object crops and masks from YOLO polygon annotations.
+- Conducted Conditional GAN, ACGAN, Projection cGAN, and StyleGAN2-ADA experiments for synthetic-data generation.
+- Evaluated GAN outputs for mode collapse, geometric consistency, diversity, and data-leakage risks, and explored masked copy-paste as a more controlled augmentation strategy.
+
+### Shared Work
+
+The following stages were carried out collaboratively:
+
+- Collection of real nut and screw images and planning of difficult scenes.
+- Bounding-box and polygon annotation in Roboflow, class standardization, and annotation quality control.
+- Dataset development and train/validation/test splitting.
+- Evaluation of model outputs on real images and data-driven improvement decisions.
+- End-to-end testing and consolidation of the project documentation.
+
+---
+
 Bu paket, projenin teknik içeriğini ve kaynak kodlarını içerir. Dokümantasyon önce veri toplama ve etiketleme, ardından segmentasyon modeli, Jetson/FastAPI/Flutter sistemi ve en son GAN tabanlı hibrit veri artırma sürecini anlatır.
 
 ## Gizli veri seti
